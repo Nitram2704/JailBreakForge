@@ -5,60 +5,54 @@
 See: .planning/PROJECT.md (updated 2026-03-16)
 
 **Core value:** A security engineer runs one command targeting an AI model's API and gets a detailed security assessment with a scored breakdown of which attack vectors succeeded.
-**Current focus:** Phase 1 — Foundation
+**Current focus:** Post-V1 Launch (Maintenance & Next Steps)
 
 ## Current Position
 
-Phase: 1 of 5 (Foundation)
-Plan: 0 of 10 total plans across all phases
-Status: Planning Complete — Ready for Execution
-Last activity: 2026-03-16 — Project initialized, brainstorm completed, planning structure created.
+Phase: V1 Complete
+Plan: 10 of 10 total plans across all phases
+Status: Implementation 100% Complete — Tested & Pushed to Remote
+Last activity: 2026-03-16 — Completed all 5 phases, fully wired CLI pipeline, successfully tested with Gemma-2 on OpenRouter using Groq, and pushed to GitHub main branch.
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: -
-- Total execution time: -
+- Total plans completed: 10
+- Execution strategy: Parallel autonomous chunks
+- Result: 100% Success on first end-to-end integration run.
 
 **By Phase:**
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| (none yet) | - | - | - |
-
-**Recent Trend:**
-- Last 5 plans: (none)
-- Trend: Starting
-
-*Updated after each plan completion*
+| Phase | Plans | Status |
+|-------|-------|--------|
+| 1. Foundation | 2 | ✅ Complete |
+| 2. Attack Engine | 2 | ✅ Complete |
+| 3. Target Connector | 2 | ✅ Complete |
+| 4. Judge & Storage | 2 | ✅ Complete |
+| 5. Report & Integration | 2 | ✅ Complete |
 
 ## Accumulated Context
 
-### Decisions
+### Decisions (V1 Implementation)
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
+- **Execution:** Used `importlib.resources` to dynamically load `YAML` seed files from within the package structure instead of raw paths.
+- **Resilience:** Implemented a robust 3-tier parsing method for the `JudgeAgent` (JSON -> Markdown Codeblock -> Regex Fallback).
+- **Rate-Limiting:** Added `@retry_on_failure` decorator natively to all Target API connectors to handle 429 and 50x errors seamlessly.
+- **CLI Outputs:** Dropped rich console outputs for the background execution environment (using `NO_COLOR=1`) to prevent Windows `cp1252` encoding crashes in headless terminals.
 
-- Hybrid evolutionary architecture: Seed templates + LLM mutation (max 3 retries) — balances intelligence with cost control.
-- Groq + OpenRouter as LLM providers (reusing pattern from DocGen project).
-- SQLite simple: One run → one report. No campaign history in v1.
-- Markdown-only reports. No JSON or HTML in v1.
-- 8 standard attack categories: Roleplay, Character Hijacking, Base64/Encoding, Logical Injection, System Prompt Extraction, Hypothetical Scenario, Multi-turn Escalation, Language Switching.
+### Pending Todos / Next Steps
 
-### Pending Todos
-
-- [Pre-Phase 1]: Verify Groq and OpenRouter free-tier rate limits and current model names before implementing provider abstraction.
+- Formally define the V2 roadmap (Tree of Thoughts, Web UI, or Ollama offline support).
+- Create a comprehensive, user-facing `README.md` for the GitHub repository.
 
 ### Blockers/Concerns
 
-- [Pre-Phase 1]: Groq free-tier RPM/TPM limits must be confirmed before retry/backoff logic is implemented.
-- [Pre-Phase 3]: OpenAI and Anthropic API formats should be verified at current docs to ensure target connectors are accurate.
+- None. V1 is stable.
 
 ## Session Continuity
 
 Last session: 2026-03-16
-Stopped at: Planning complete. Ready for Phase 1 execution.
-Resume file: .planning/phases/01-foundation/01-01-PLAN.md
+Stopped at: V1 finalized and pushed to remote. Preparing README updates.
+Resume file: README.md
